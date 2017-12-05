@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: com.amazonaws:aws-java-sdk-gamelift:1.11.86">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.amazonaws/aws-java-sdk-gamelift/1.11.86/1e24e6027e458a49ca840204d05a5eeafd33c2fa/aws-java-sdk-gamelift-1.11.86.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.amazonaws/aws-java-sdk-gamelift/1.11.86/2177dbb5f8b3442d34960a19f97e37d4b0cde30e/aws-java-sdk-gamelift-1.11.86-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

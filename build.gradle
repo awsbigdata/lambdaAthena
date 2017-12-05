@@ -3,12 +3,18 @@ version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
 
-sourceCompatibility = 1.8
+sourceCompatibility = 1.7
 
 repositories {
     mavenCentral()
     flatDir {
         dirs 'libs'
+    }
+    maven{
+        url "http://maven.twttr.com"
+    }
+    maven {
+        url "http://clojars.org/repo/"
     }
 }
 
@@ -17,10 +23,22 @@ dependencies {
 }
 
 dependencies {
+ //   compile group: 'com.amazonaws', name: 'aws-lambda-java-core', version: '1.1.0'
+   compile group: 'com.amazonaws', name: 'aws-java-sdk', version: '1.11.86'
+    //compile group: 'com.amazonaws', name: 'aws-java-sdk-dynamodb', version: '1.11.86'
+    compile group: 'com.amazonaws', name: 'aws-java-sdk-lambda', version: '1.9.22'
     compile group: 'com.amazonaws', name: 'aws-lambda-java-core', version: '1.1.0'
-    compile group: 'com.amazonaws', name: 'aws-java-sdk', version: '1.11.86'
-    compile group: 'com.amazonaws', name: 'aws-java-sdk-dynamodb', version: '1.11.86'
-    testCompile group: 'junit', name: 'junit', version: '4.11'
+    compile group: 'mysql', name: 'mysql-connector-java', version: '6.0.6'
+
+    // compile group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.3.4'
+   // compile group: 'com.amazonaws', name: 'amazon-kinesis-client', version: '1.7.5'
+
+   // compile group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.2'
+   // compile group: 'com.microsoft.sqlserver', name: 'sqljdbc4', version: '4.0'
+
+   // compile 'com.google.guava:guava:21.0'
+
+   // testCompile group: 'junit', name: 'junit', version: '4.11'
 }
 
 
@@ -32,4 +50,38 @@ task buildZip(type: Zip) {
     }
 }
 
-build.dependsOn buildZip
+//build.dependsOn buildZip
+
+task fatJar(type: Jar) {
+    baseName = project.name + '-all'
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+    manifest {
+        attributes 'Implementation-Title': 'Gradle Quickstart', 'Implementation-Version': version
+        attributes 'Main-Class': 'com.organization.project.package.mainClassName'
+    }
+
+}
+
+task wdep(type: Jar) {
+    baseName = project.name + 'name'
+    with jar
+    manifest {
+        attributes 'Implementation-Title': 'Gradle Quickstart', 'Implementation-Version': version
+        attributes 'Main-Class': 'com.organization.project.package.mainClassName'
+    }
+
+}
+
+tasks.addRule("Pattern : ping<ID>") {
+    String taskName -> if(taskName.startsWith("ping")){
+        task(taskName) <<{
+            println("pinging: "+(taskName-'ping'))
+        }
+    }
+}
+
+task lazy(dependsOn: 'count')<<{
+    println('so lazy')
+}
+

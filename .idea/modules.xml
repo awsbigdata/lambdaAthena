@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/lambdaAthena.iml" filepath="$PROJECT_DIR$/.idea/modules/lambdaAthena.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/lambdaAthena_main.iml" filepath="$PROJECT_DIR$/.idea/modules/lambdaAthena_main.iml" group="lambdaAthena" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/lambdaAthena_test.iml" filepath="$PROJECT_DIR$/.idea/modules/lambdaAthena_test.iml" group="lambdaAthena" />
+    </modules>
+  </component>
+</project>

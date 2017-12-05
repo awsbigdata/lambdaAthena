@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: com.amazonaws:aws-java-sdk-simpledb:1.11.86">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.amazonaws/aws-java-sdk-simpledb/1.11.86/1293280b72b6201b920640902690f5ea2172fca5/aws-java-sdk-simpledb-1.11.86.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.amazonaws/aws-java-sdk-simpledb/1.11.86/1a795b8f1762bb5870d7f9826352ccb21dd07d25/aws-java-sdk-simpledb-1.11.86-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

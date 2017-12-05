@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: com.amazonaws:aws-java-sdk-marketplacecommerceanalytics:1.11.86">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.amazonaws/aws-java-sdk-marketplacecommerceanalytics/1.11.86/2e2fe54de2ad2b167114b5e8e4b7b3d1514c0448/aws-java-sdk-marketplacecommerceanalytics-1.11.86.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.amazonaws/aws-java-sdk-marketplacecommerceanalytics/1.11.86/f6aa07e20bbc3e01b763d300bf5752162b039b72/aws-java-sdk-marketplacecommerceanalytics-1.11.86-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

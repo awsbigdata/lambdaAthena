@@ -3,68 +3,83 @@ package com.amazonaws.lambda.athena;
 /**
  * Created by srramas on 2/7/17.
  */
+
+
+import com.amazonaws.athena.jdbc.AthenaQueryResultSet;
+import com.amazonaws.athena.jdbc.AthenaResultSet;
+import com.amazonaws.athena.jdbc.AthenaStatement;
+
+import java.net.URL;
 import java.sql.*;
+import java.util.Iterator;
 import java.util.Properties;
 import java.util.Random;
 
-import com.amazonaws.athena.jdbc.AthenaDriver;
-import com.amazonaws.auth.PropertiesFileCredentialsProvider;
-import com.amazonaws.services.dynamodbv2.document.Item;
-import com.amazonaws.services.dynamodbv2.document.Table;
-import com.amazonaws.services.dynamodbv2.document.TableWriteItems;
 
 
 public class AthenaJDBCDemo {
 
-    static final String athenaUrl = "jdbc:awsathena://athena.us-east-1.amazonaws.com:443";
-    static String tableName = "employee";
-
+    static final String athenaUrl = "jdbc:awsathena://athena.us-east-1.amazonaws.com:443/hive/hive_glue";
 
     public static void athenaTodynamo() {
 
         Connection conn = null;
-        Statement statement = null;
+        AthenaStatement statement = null;
 
         try {
             Class.forName("com.amazonaws.athena.jdbc.AthenaDriver");
             Properties info = new Properties();
-            info.put("s3_staging_dir", "s3://testeastreg/athena");
-           // info.put("log_path", "/Users/myUser/.athena/athenajdbc.log");
-            info.put("aws_credentials_provider_class","com.amazonaws.auth.DefaultAWSCredentialsProviderChain");
+            info.put("s3_staging_dir", "s3://aws-athena-query-results-898623153764-us-east-1/");
+            info.put("aws_credentials_provider_class","com.amazonaws.athena.jdbc.shaded.com.amazonaws.auth.DefaultAWSCredentialsProviderChain");
             System.out.println("Connecting to Athena...");
             conn = DriverManager.getConnection(athenaUrl, info);
-            System.out.println("Listing tables...");
-            String sql = "select * from abc.employee_orc";
-            statement = conn.createStatement();
-            statement.setFetchSize(100);
-            ResultSet rs = statement.executeQuery(sql);
-            System.out.println("After Athena query execution");
+          DatabaseMetaData  dbmd = conn.getMetaData();
 
-           TableWriteItems writeItems = new TableWriteItems(tableName);
-
+            ResultSet rs = dbmd.getTypeInfo();
             while (rs.next()) {
-                //Retrieve table column.
-                String name = rs.getString("name");
-                double id = rs.getDouble("id");
-                String age = rs.getString("age");
-                //Display values.
-                System.out.println("Name: " + name);
-                System.out.println("id: " + id);
-                System.out.println("age: " + age);
-                Random random=new Random();
-                int r=random.nextInt(20);
-                age=age+r;
-                Item item=new Item()
-                        .withPrimaryKey("age", age)
-                        .withDouble("id", id)
-                        .withString("name",name);
-                writeItems.addItemToPut(item);
+                String typeName = rs.getString("TYPE_NAME");
+                short dataType = rs.getShort("DATA_TYPE");
+                String createParams = rs.getString("CREATE_PARAMS");
+                int nullable = rs.getInt("NULLABLE");
+                boolean caseSensitive = rs.getBoolean("CASE_SENSITIVE");
+                System.out.println("DBMS type " + typeName + ":");
+                System.out.println("     java.sql.Types:  "  + dataType);
+                System.out.print("     parameters used to create: ");
+                System.out.println(createParams);
+                System.out.println("     nullable?:  "  + nullable);
+                System.out.print("     case sensitive?:  ");
+                System.out.println(caseSensitive);
+                System.out.println("");
+
             }
 
-            System.out.println("After bathwrite constructed");
-            DynamoDBConnector.processItems(writeItems);
 
-            rs.close();
+
+            System.out.println("Listing tables...");
+            String databaseName = "sampledb";
+
+            String sql = "msck repair table test";// in "+ databaseName;
+
+            statement = (AthenaStatement) conn.createStatement();
+
+
+            System.out.println("After Athena query execution");
+            System.out.println("Listing tables...");
+
+            ResultSet rs2 =  statement.executeQuery(sql);
+
+           // System.out.println(athenaQueryResultSet.getQueryId());
+
+            while (rs2.next()) {
+                //Retrieve table column.
+                String name = rs2.getString(1);
+
+                System.out.println("Name: " + name);
+            }
+            rs2.close();
+
+            System.out.println("After bathwrite constructed");
+
             conn.close();
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -87,10 +102,7 @@ public class AthenaJDBCDemo {
     }
 
     public static void main(String[] arg){
-        athenaTodynamo();
-
-    }
-
-
+      athenaTodynamo();
+        }
 
 }
