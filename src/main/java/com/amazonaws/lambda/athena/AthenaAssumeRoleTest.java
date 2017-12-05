@@ -19,9 +19,9 @@ public class AthenaAssumeRoleTest {
 
             Class.forName("com.amazonaws.athena.jdbc.AthenaDriver");
             Properties info = new Properties();
-            info.put("s3_staging_dir", "s3://aws-athena-query-results-898623153764-us-east-1/");
+            info.put("s3_staging_dir", "s3://aws-athena-query-results--us-east-1/");
             info.put("aws_credentials_provider_class", "com.amazonaws.lambda.athena.CustomSTSCredentialsProvider");
-            info.put("aws_credentials_provider_arguments","arn:aws:iam::898623153764:role/crossaccount,AKIAJHLAKS66JN7KR24A,cqUN1Su4ZwONx1miSKOdnT3WMaUNvIG83ReeIdli");
+            info.put("aws_credentials_provider_arguments","arn:aws:iam:::role/crossaccount,tests,test");
             System.out.println("Connecting to Athena...");
             conn = DriverManager.getConnection(athenaUrl, info);
             DatabaseMetaData dbmd = conn.getMetaData();
